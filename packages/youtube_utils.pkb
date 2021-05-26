@@ -2,8 +2,8 @@ set define off;
 create or replace package body youtube_utils as 
 
     gc_scope_prefix constant varchar2(31) := lower($$plsql_unit) || '.';
-    g_key           constant varchar2(63) := 'AIzaSyDaWDnMIH4zmqsel-x6gBDuJ70uYRW5h54';
-    g_playlist_id   constant varchar2(63) := 'PLCAYBJ7ynpQQQrdwKFBZu8Kx9VTFt-pRP';
+    g_key           constant varchar2(63) := '[CHANGEME]';
+    g_playlist_id   constant varchar2(63) := '[CHANGEME]';
 
 
     procedure capture_stats
