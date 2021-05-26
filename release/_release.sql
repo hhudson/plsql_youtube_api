@@ -47,7 +47,7 @@ prompt Log File: &logname
 @../packages/youtube_utils.pks
 @../packages/youtube_utils.pkb
 
-prompt Invalid objects
+prompt Invalid objects - pre compile
 select object_name, object_type
 from user_objects
 where status != 'VALID'
@@ -61,6 +61,13 @@ begin
  dbms_utility.compile_schema(schema => user, compile_all => false);
 end;
 /
+
+prompt Invalid objects - post compile
+select object_name, object_type
+from user_objects
+where status != 'VALID'
+order by object_name
+;
 
 spool off
 exit

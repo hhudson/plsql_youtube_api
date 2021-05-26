@@ -1,14 +1,5 @@
 PRO ..  yt_video
 
-begin
-    execute immediate 'drop table yt_video cascade constraints purge';
-exception
-    when others then
-        null;
-end;
-/
-
--- create tables
 create table yt_video (
     video_id                       varchar2(31 char)
                                    constraint yt_video_pk primary key,

@@ -2,8 +2,8 @@ set define off;
 create or replace package body youtube_utils as 
 
     gc_scope_prefix constant varchar2(31) := lower($$plsql_unit) || '.';
-    g_key           constant varchar2(63) := '[CHANGEME]';
-    g_playlist_id   constant varchar2(63) := '[CHANGEME]';
+    g_key           constant varchar2(63) := apex_util.url_encode('[CHANGEME]');
+    g_playlist_id   constant varchar2(63) := apex_util.url_encode('[CHANGEME]');
 
 
     procedure capture_stats
@@ -37,7 +37,7 @@ create or replace package body youtube_utils as
                     select yt.videoid video_id, d2.title,  yt.videopublishedat video_published_at
                         from 
                         (select apex_web_service.make_rest_request(
-                                p_url         => 'https://www.googleapis.com/youtube/v3/videos?key='||g_key||'&part=localizations&id='||p.videoid, 
+                                p_url         => 'https://www.googleapis.com/youtube/v3/videos?key='||g_key||'&part=localizations&id='||apex_util.url_encode(p.videoid), 
                                 p_http_method => 'GET' ) thejson,
                                 p.videoid, p.videoPublishedAt
                         from playlist p
@@ -52,7 +52,7 @@ create or replace package body youtube_utils as
                     select video_id, title, video_published_at
                     from yt_video
                 ) b
-            on (a.video_id    = b.video_id)
+            on (a.video_id = b.video_id)
             when matched then update set
                 a.title              = b.title,
                 a.video_published_at = b.video_published_at
