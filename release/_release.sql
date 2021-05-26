@@ -4,8 +4,6 @@ clear screen
 
 whenever sqlerror exit sql.sqlcode
 
-prompt loading environment variables
-
 -- define - Sets the character used to prefix substitution variables
 -- Note: if you change this you need to modify every reference of it in this file and any referring files
 -- set define '&'
@@ -32,17 +30,6 @@ column my_logname clear
 set termout on
 spool &logname
 prompt Log File: &logname
-
-
-
-prompt check DB user is expected user
-declare
-begin
-  if user != '&env_schema_name' or '&env_schema_name' is null then
-    raise_application_error(-20001, 'Must be run as &env_schema_name');
-  end if;
-end;
-/
 -- *** END: HEADER SECTION ***
 
 

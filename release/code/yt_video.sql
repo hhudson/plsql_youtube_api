@@ -1,8 +1,4 @@
--- drop objects
-
 PRO ..  yt_video
-alter session set current_schema = ILA;
-/
 
 begin
     execute immediate 'drop table yt_video cascade constraints purge';
