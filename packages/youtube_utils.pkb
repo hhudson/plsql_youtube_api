@@ -8,8 +8,8 @@ create or replace package body youtube_utils as
 
     procedure capture_stats
     is 
-    l_scope logger_logs.scope%type := gc_scope_prefix || 'capture_stats';
-    l_params logger.tab_param;
+    --l_scope logger_logs.scope%type := gc_scope_prefix || 'capture_stats';
+    --l_params logger.tab_param;
 
         procedure capture_list_of_videos
         is 
@@ -60,7 +60,7 @@ create or replace package body youtube_utils as
                 insert (  video_id,   title,   video_published_at)
                 values (b.video_id, b.title, b.video_published_at);
 
-            logger.log('. merged into yt_video :', l_scope, to_char(sql%rowcount));
+            --logger.log('. merged into yt_video :', l_scope, to_char(sql%rowcount));
         end capture_list_of_videos;
 
         procedure capture_the_stats
@@ -70,7 +70,7 @@ create or replace package body youtube_utils as
           insert into yt_log (name)
           values (to_char(sysdate,'YYYY-MM-DD HH24-MI-SS'))
           returning id into l_log_id;
-          logger.log('. log_id:', l_scope, to_char(l_log_id));
+          --logger.log('. log_id:', l_scope, to_char(l_log_id));
           
           insert into yt_stats 
                 (  log_id,  video_id,  view_count,  like_count,  comment_count)
@@ -111,20 +111,20 @@ create or replace package body youtube_utils as
                         ))) d
             order by yt.videoPublishedAt
           ) z;
-          logger.log('. inserted into yt_stats :', l_scope, to_char(sql%rowcount));
+          --logger.log('. inserted into yt_stats :', l_scope, to_char(sql%rowcount));
 
         end capture_the_stats;
 
     begin
-        logger.log('START', l_scope, null, l_params);
+        --logger.log('START', l_scope, null, l_params);
 
         capture_list_of_videos;
 
         capture_the_stats;
 
-        logger.log('END', l_scope);
+        --logger.log('END', l_scope);
     exception when others then 
-        logger.log_error('Unhandled Exception', l_scope, null, l_params); 
+        --logger.log_error('Unhandled Exception', l_scope, null, l_params); 
         raise;  
     end capture_stats;
 
